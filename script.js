@@ -87,4 +87,4 @@ function bme280() {
 }
 
 dallas();
-bme280();
+// bme280();
