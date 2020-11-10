@@ -11,7 +11,8 @@ function dallas() {
 
   function login(result) {
     let php = JSON.parse(result);
-    console.log(php);
+    php = php.reverse();
+//     console.log(php);
     document.querySelectorAll(
       ".rounded-pill"
     )[1].innerText = `${php[0]["value"]} С°`;
@@ -27,8 +28,8 @@ function dallas() {
           out += `<div class="card border-secondary mb-3">`;
           out += `<div class="card-header bg-success text-white">BME 280</div>`;
           out += `<div class="card-body">`;
-          out += `<h5 class="card-title">${php[i]["date"]}</h5>`;
-          out += `<h6 class="card-text">Температура: ${php[0]["value"]} С°</h6>`;
+          out += `<h5 class="card-title">${php[49]["date"]}</h5>`;
+          out += `<h6 class="card-text">Температура: ${php[49]["value"]} С°</h6>`;
           // out += `<h6 class="card-text">Влажность: ' . $tempbme[$a]['humidity'] . ' %</h6>`;
           // out += `<h6 class="card-text">Давление: ' . $tempbme[$a]['pressure'] . ' мм рт. ст</h6>`;
           out += `</div>`;
@@ -44,8 +45,8 @@ function dallas() {
         out += `<div class="card border-info mb-3">`;
         out += `<div class="card-header bg-info text-white">BME 280</div>`;
         out += `<div class="card-body">`;
-        out += `<h5 class="card-title">${php[i]["date"]}</h5>`;
-        out += `<h6 class="card-text">Температура: ${php[i]["value"]} С°</h6>`;
+        out += `<h5 class="card-title">${php[i-1]["date"]}</h5>`;
+        out += `<h6 class="card-text">Температура: ${php[i-1]["value"]} С°</h6>`;
         // out += `<h6 class="card-text">Влажность: ${} %</h6>`;
         // out += `<h6 class="card-text">Давление: ${} мм рт. ст</h6>`;
         out += `</div>`;
