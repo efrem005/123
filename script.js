@@ -40,7 +40,7 @@ function dallas() {
         }
       } else {
         out = "";
-        out += `<div class="col-lg-4 col-md-6 col-sm-6">`;
+        out += `<div class="col-lg-4 col-md-6 col-sm-6 myapp">`;
         out += `<div class="card border-info mb-3">`;
         out += `<div class="card-header bg-info text-white">BME 280</div>`;
         out += `<div class="card-body">`;
