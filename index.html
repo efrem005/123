@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta
       name="description"
-      content="Это сайт создан на Домашнем сервере Open Server"
+      content="Это сайт создан на Github и Heroku"
     />
     <meta
       name="viewport"
@@ -29,7 +29,7 @@
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
         <div class="container-fluid">
-          <a class="navbar-brand" href="index.php">Smart</a>
+          <a class="navbar-brand" href="index.html">Smart</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -44,15 +44,15 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.php"
+                <a class="nav-link active" aria-current="page" href="index.html"
                   >Главная</a
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="bme.php">BME280</a>
+                <a class="nav-link disabled" href="bme.php">BME280</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="18b20.php">18B20</a>
+                <a class="nav-link disabled" href="18b20.php">18B20</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link disabled" href="18b20.php">Скоро</a>
@@ -78,19 +78,14 @@
           <div class="list-group">
             <a class="list-group-item list-group-item-action active">Главная</a>
             <a
-              href="/bme.php"
+              href="#"
               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-              >BME 280
-              <span class="badge bg-primary rounded-pill"
-                ><?php echo $tempbme[0]['temp'] ?>
-                С°</span
-              ></a
-            >
+              >BME 280></a>
             <a
-              href="/18b20.php"
+              href="#"
               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
               >18B20
-              <span class="badge bg-primary rounded-pill">1234С°</span></a
+              <span class="badge bg-primary rounded-pill"></span></a
             >
             <a href="#" class="list-group-item list-group-item-action"
               >Porta ac consectetur ac</a
@@ -105,7 +100,7 @@
             <div class="col-md-12 mb-2 justify-content-center myone">
               <div class="card">
                 <div class="card-body text-center bg-success text-white">
-                  This is some text within a card body.
+                  Температура на улице.
                 </div>
               </div>
             </div>
