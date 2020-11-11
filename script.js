@@ -13,12 +13,9 @@ function dallas() {
     let php = JSON.parse(result);
     php = php.reverse();
 //     console.log(php);
-    document.querySelectorAll(
+    document.querySelector(
       ".rounded-pill"
-    )[1].innerText = `${php[0]["value"]} С°`;
-    // document.querySelectorAll(
-    //   ".card-text"
-    // )[0].innerText = `Температура: ${php[0]["value"]} С°`;
+    ).innerText = `${php[0]["value"]} С°`;
 
     for (let i = 0; i < php.length; i++) {
       if (i == 0) {
@@ -26,12 +23,10 @@ function dallas() {
           let out = "";
           out += `<div class="col-lg-4 col-md-6 col-sm-6 myapp">`;
           out += `<div class="card border-secondary mb-3">`;
-          out += `<div class="card-header bg-success text-white">BME 280</div>`;
+          out += `<div class="card-header bg-success text-white">Dallas 18B20</div>`;
           out += `<div class="card-body">`;
           out += `<h5 class="card-title">${php[49]["date"]}</h5>`;
           out += `<h6 class="card-text">Температура: ${php[49]["value"]} С°</h6>`;
-          // out += `<h6 class="card-text">Влажность: ' . $tempbme[$a]['humidity'] . ' %</h6>`;
-          // out += `<h6 class="card-text">Давление: ' . $tempbme[$a]['pressure'] . ' мм рт. ст</h6>`;
           out += `</div>`;
           out += `</div>`;
           out += `</div>`;
@@ -43,12 +38,10 @@ function dallas() {
         out = "";
         out += `<div class="col-lg-4 col-md-6 col-sm-6 myapp">`;
         out += `<div class="card border-info mb-3">`;
-        out += `<div class="card-header bg-info text-white">BME 280</div>`;
+        out += `<div class="card-header bg-info text-white">Dallas 18B20</div>`;
         out += `<div class="card-body">`;
         out += `<h5 class="card-title">${php[i-1]["date"]}</h5>`;
         out += `<h6 class="card-text">Температура: ${php[i-1]["value"]} С°</h6>`;
-        // out += `<h6 class="card-text">Влажность: ${} %</h6>`;
-        // out += `<h6 class="card-text">Давление: ${} мм рт. ст</h6>`;
         out += `</div>`;
         out += `</div>`;
         out += `</div>`;
@@ -74,17 +67,7 @@ function bme280() {
       ".rounded-pill"
     )[0].innerText = `${php[0]["temp"]} С°`;
     console.log(php);
-    // document.querySelectorAll(
-    //   ".card-text"
-    // )[1].innerText = `Температура: ${php[0]["temp"]} С°`;
-    // document.querySelectorAll(
-    //   ".card-text"
-    // )[2].innerText = `Влажность: ${php[0]["humidity"]} %`;
-    // document.querySelectorAll(
-    //   ".card-text"
-    // )[3].innerText = `Давление: ${php[0]["pressure"]} мм рт. ст`;
   }
 }
 
 dallas();
-// bme280();
