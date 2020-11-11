@@ -15,7 +15,7 @@ function dallas() {
 //     console.log(php);
     document.querySelector(
       ".rounded-pill"
-    ).innerText = `${php[0]["value"]} С°`;
+    ).innerText = `${php[49]["value"]} С°`;
 
     for (let i = 0; i < php.length; i++) {
       if (i == 0) {
