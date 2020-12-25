@@ -1,4 +1,11 @@
 function fullSite(num = 50) {
+
+  document
+    .querySelector('.justify-content-center')
+    .insertAdjacentHTML('afterend', landingPage)
+
+  const spiner = document.querySelector('.spiner')
+  
   const COUNT = num
 
   const url = 'https://php-array-app.herokuapp.com/get.php'
@@ -19,7 +26,10 @@ function fullSite(num = 50) {
     body: JSON.stringify(DATA),
   })
     .then((data) => data.json())
-    .then((data) => html(data))
+    .then((data) => {
+      spiner.remove()
+      html(data)
+    })
     .catch((err) => console.log(err))
 
   function html(dataIn) {
@@ -52,6 +62,30 @@ function fullSite(num = 50) {
     else if (min <= -30) spanMin.classList.add('bg-warning')
     else if (min <= -20) spanMin.classList.add('bg-info')
     else spanMin.classList.add('bg-success')
+
+    const maxTempHtml = `
+      <div class="myapp mt-4">
+        <div class="card border-secondary mb-3">
+          <div class="card-header bg-warning text-white">Max температура</div>
+            <div class="card-body">
+            <h5 class="card-title">${maxListTemp['date']}</h5>
+            <h6 class="card-text">Температура: ${maxListTemp['value']} С°</h6>
+            </div>
+        </div>
+      </div>
+    `
+
+    const minTempHtml = `
+      <div class="myapp mt-4">
+        <div class="card border-secondary mb-3">
+          <div class="card-header bg-secondary text-white">Min температура</div>
+            <div class="card-body">
+            <h5 class="card-title">${minListTemp['date']}</h5>
+            <h6 class="card-text">Температура: ${minListTemp['value']} С°</h6>
+            </div>
+        </div>
+      </div>
+    `
 
     for (let i = 0; i < php.length; i++) {
       if (i == 0) {
@@ -86,6 +120,12 @@ function fullSite(num = 50) {
         document.querySelector('.myapp').insertAdjacentHTML('afterend', out)
       }
     }
+    document
+      .querySelector('.list-group')
+      .insertAdjacentHTML('afterend', maxTempHtml)
+    document
+      .querySelector('.list-group')
+      .insertAdjacentHTML('afterend', minTempHtml)
   }
 }
 
@@ -101,3 +141,10 @@ window.onload = function () {
 
   fullSite()
 }
+
+
+const landingPage = `<div class="d-flex justify-content-center spiner mt-5">
+  <div class="spinner-border text-success" role="status">
+    <span class="visually-hidden"></span>
+  </div>
+</div>`
