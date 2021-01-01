@@ -1,8 +1,9 @@
+var t1 = performance.now();
 function fullSite(num = 15) {
 
-  document.querySelector('.justify-content-center').insertAdjacentHTML('afterend', landingPage)
+  document.querySelector('.myone').appendChild(landingPage())
 
-  document.querySelector('.barMenu').insertAdjacentHTML('afterbegin', landingPage)
+  document.querySelector('.barMenu').appendChild(landingPage())
 
   const spiner = document.querySelectorAll('.spiner')
   
@@ -33,6 +34,12 @@ function fullSite(num = 15) {
     .catch((err) => console.log(err))
 
   function html(dataIn) {
+
+    var t0 = performance.now();
+
+console.log("Время выгрузки данных " + Math.abs((t1 - t0) / 1000).toFixed(2) + " секунд.")
+
+
     let php = []
     dataIn.forEach(el => {
       let unix = new Date(el.date).getTime()
@@ -48,18 +55,17 @@ function fullSite(num = 15) {
         let days = Math.round((Date.now() - millisec) / (1000 * 60 * 60 * 24));
 
         if (seconds < 60) {
-            return seconds + " Секунд";
+            return seconds + " cекунд";
         } else if (minutes < 60) {
-            return minutes + " Минут";
+            return minutes + " минут";
         } else if (hours < 24) {
-            return hours + " Час";
+            return hours + " час";
         } else {
-            return days + " День"
+            return days + " день"
         }
       }
-      
-      let minutes = Math.round((Date.now() - new Date(el.date).getTime()) / (1000 * 60))
-      php.push({id: el.id, time: minutes, date: el.date, unix: unixT(unix), value: parseFloat(el.value)})
+
+      php.push({id: el.id, time: unix, date: el.date, unix: unixT(unix), value: parseFloat(el.value)})
     })
     console.log(php)
     const maxT = php.map((el) => el.value)
@@ -75,24 +81,21 @@ function fullSite(num = 15) {
     function tempLop(){
       const result = Math.abs(php[php.length - 1].value - live).toFixed(1)
       let outTemp = php[php.length - 1].value
-      if(outTemp < live) return `+${result}`
+      if(outTemp == live) return `${result}`
+      else if(outTemp < live) return `+${result}`
       else return `-${result}`
     }
 
     const tempSrednjj = `
     <div class="myapp card text-dark mb-3">
-                <div class="card-header bg-success text-white">Улица сейчас</div>
+                <div class="card-header bg-success text-white d-flex justify-content-between"><span>Улица</span><span>${php[0].unix } назад</span></div>
                 <div class="card-body bg-light">
-                  <h1 class="card-title text-center position-relativ tempLive">
+                  <h1 class="card-title text-center tempLive">
                     ${live}°
-                    <span class="position-absolute liveTemp bg-success text-white" 
-                      style="    
-                      border-radius: 20px;
-                      font-size: 20px;
-                      width: 55px;
-                      height: 26px;
-                      right: 40px;">${tempLop()}°</span>
                   </h1>
+                </div>
+                <div class="card-header bg-info text-white text-center">
+                <h5 class="text-white">${tempLop()}° за ${php[php.length - 1]['unix']}</h5>
                 </div>
               </div>`
 
@@ -100,7 +103,7 @@ function fullSite(num = 15) {
       <div class="myapp mt-4">
         <div class="card border-secondary mb-3">
           <div class="card-header bg-warning text-white">Max температура</div>
-            <div class="card-body">
+            <div class="card-body bg-light">
             <h5 class="card-title">${maxListTemp['date']}</h5>
             <h6 class="card-text">Температура: ${maxListTemp['value']} С°</h6>
             </div>
@@ -112,7 +115,7 @@ function fullSite(num = 15) {
       <div class="myapp mt-4">
         <div class="card border-secondary mb-3">
           <div class="card-header bg-secondary text-white">Min температура</div>
-            <div class="card-body">
+            <div class="card-body bg-light">
             <h5 class="card-title">${minListTemp['date']}</h5>
             <h6 class="card-text">Температура: ${minListTemp['value']} С°</h6>
             </div>
@@ -138,7 +141,7 @@ function fullSite(num = 15) {
   php.map((el) => logHtml(el))
 
 
-    document.querySelector('.barMenu').insertAdjacentHTML('afterbegin', tempSrednjj)
+    document.querySelector('.barMenu').insertAdjacentHTML('beforeend', tempSrednjj)
 
     document
       .querySelector('.barMenu')
@@ -163,8 +166,12 @@ window.onload = function () {
 }
 
 
-const landingPage = `<div class="d-flex justify-content-center spiner mt-5">
+const landingPage = () => {
+const block = document.createElement('div')
+block.classList.add('d-flex', 'justify-content-center', 'spiner', 'mt-5')
+block.innerHTML =`
   <div class="spinner-border text-success" role="status">
     <span class="visually-hidden"></span>
-  </div>
-</div>`
+  </div>`
+  return block
+}
