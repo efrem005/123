@@ -16,13 +16,15 @@
       integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
       crossorigin="anonymous"
     />
+    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
  <title>Метео HOME</title>
   </head>
   <body>
     <div class="container">
           <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
             <div class="container-fluid">
-              <a class="navbar-brand" href="index.html">Smart</a>
+              <a class="navbar-brand" href="./index.html">
+                <img style="height: 50px;" src="./img/logo.png" alt="метеоСтанция"></a>
               <button
                 class="navbar-toggler"
                 type="button"
@@ -52,14 +54,23 @@
                   </li>
                 </ul>
                 <form class="d-flex">
-                  <input
-                    class="form-control mr-2"
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
-                  />
+                  <div class="col-auto mr-2" style="width: 150px;">
+                    <!-- <label class="visually-hidden" for="autoSizingSelect">Preference</label> -->
+                    <select class="form-select" id="autoSizingSelect">
+                      <option selected value="50">Значение</option>
+                      <option value="15">15</option>
+                      <option value="30">30</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                      <option value="200">200</option>
+                      <option value="400">400</option>
+                      <option value="800">800</option>
+                      <option value="1600">1600</option>
+                      <option value="3200">3200</option>
+                    </select>
+                  </div>
                   <button class="btn btn-outline-success mybtn" type="submit">
-                    Search
+                    вывод
                   </button>
                 </form>
               </div>
@@ -67,37 +78,18 @@
           </nav>
 
           <div class="row">
-            <div class="col-lg-3 mb-2">  <!--d-none, d-lg-block-->
-              <div class="list-group">
-                <a class="list-group-item list-group-item-action active">Главная</a>
-                <a
-                  href="#"
-                  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                  >Улица
-                  <span class="badge bg-success rounded-pill"></span></a
-                >
-                <a
-                  href="#"
-                  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                  >MAX
-                  <span class="badge rounded-pill maxTemp"></span></a>
-                  <a
-                  href="#"
-                  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                  >MIN
-                  <span class="badge rounded-pill minTemp"></span></a>
-              </div>
+            <div class="col-lg-3 mb-2 barMenu">  <!--d-none, d-lg-block-->
+              
             </div>
             <div class="col-lg-9 col-md-12">
-              <div class="row">
-                <div class="col-md-12 mb-2 justify-content-center myone">
+              <div class="row myone">
+                <div class="col-md-12 mb-2 justify-content-center">
                   <div class="card">
                     <div class="card-body text-center bg-success text-white">
                       Температура на улице.
                     </div>
                   </div>
                 </div>
-                
               </div>
             </div>
           </div>

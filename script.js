@@ -1,10 +1,10 @@
-function fullSite(num = 50) {
+function fullSite(num = 15) {
 
-  document
-    .querySelector('.justify-content-center')
-    .insertAdjacentHTML('afterend', landingPage)
+  document.querySelector('.justify-content-center').insertAdjacentHTML('afterend', landingPage)
 
-  const spiner = document.querySelector('.spiner')
+  document.querySelector('.barMenu').insertAdjacentHTML('afterbegin', landingPage)
+
+  const spiner = document.querySelectorAll('.spiner')
   
   const COUNT = num
 
@@ -27,41 +27,74 @@ function fullSite(num = 50) {
   })
     .then((data) => data.json())
     .then((data) => {
-      spiner.remove()
+      spiner.forEach((el, id) => spiner[id].remove())
       html(data)
     })
     .catch((err) => console.log(err))
 
   function html(dataIn) {
-    let php = dataIn
-    php = php.reverse()
+    let php = []
+    dataIn.forEach(el => {
+      let unix = new Date(el.date).getTime()
+
+      const unixT = (millisec) => {
+
+        let seconds = Math.round((Date.now() - millisec) / 1000);
+
+        let minutes = Math.round((Date.now() - millisec) / (1000 * 60));
+
+        let hours = Math.round((Date.now() - millisec) / (1000 * 60 * 60));
+
+        let days = Math.round((Date.now() - millisec) / (1000 * 60 * 60 * 24));
+
+        if (seconds < 60) {
+            return seconds + " Секунд";
+        } else if (minutes < 60) {
+            return minutes + " Минут";
+        } else if (hours < 24) {
+            return hours + " Час";
+        } else {
+            return days + " День"
+        }
+      }
+      
+      let minutes = Math.round((Date.now() - new Date(el.date).getTime()) / (1000 * 60))
+      php.push({id: el.id, time: minutes, date: el.date, unix: unixT(unix), value: parseFloat(el.value)})
+    })
+    console.log(php)
     const maxT = php.map((el) => el.value)
     const max = Math.max(...maxT)
     const min = Math.min(...maxT)
-    const live = maxT[COUNT - 1]
-    const spanMax = document.querySelector('.maxTemp')
-    const spanMin = document.querySelector('.minTemp')
-    const spanLive = document.querySelector('.rounded-pill')
+    const live = php[0]['value']
 
     const maxListTemp = php.find((el) => el.value == max)
     const minListTemp = php.find((el) => el.value == min)
 
-    console.log(maxListTemp)
-    console.log(minListTemp)
+    const tempSr = php.reduce((acc, el) => (acc + el.value), 0)
 
-    spanLive.textContent = `${live} С°`
-    spanMax.textContent = `${max} С°`
-    spanMin.textContent = `${min} С°`
+    function tempLop(){
+      const result = Math.abs(php[php.length - 1].value - live).toFixed(1)
+      let outTemp = php[php.length - 1].value
+      if(outTemp < live) return `+${result}`
+      else return `-${result}`
+    }
 
-    if (max <= -33) spanMax.classList.add('bg-danger')
-    else if (max <= -30) spanMax.classList.add('bg-warning')
-    else if (max <= -20) spanMax.classList.add('bg-info')
-    else spanMax.classList.add('bg-success')
-
-    if (min <= -33) spanMin.classList.add('bg-danger')
-    else if (min <= -30) spanMin.classList.add('bg-warning')
-    else if (min <= -20) spanMin.classList.add('bg-info')
-    else spanMin.classList.add('bg-success')
+    const tempSrednjj = `
+    <div class="myapp card text-dark mb-3">
+                <div class="card-header bg-success text-white">Улица сейчас</div>
+                <div class="card-body bg-light">
+                  <h1 class="card-title text-center position-relativ tempLive">
+                    ${live}°
+                    <span class="position-absolute liveTemp bg-success text-white" 
+                      style="    
+                      border-radius: 20px;
+                      font-size: 20px;
+                      width: 55px;
+                      height: 26px;
+                      right: 40px;">${tempLop()}°</span>
+                  </h1>
+                </div>
+              </div>`
 
     const maxTempHtml = `
       <div class="myapp mt-4">
@@ -87,56 +120,43 @@ function fullSite(num = 50) {
       </div>
     `
 
-    for (let i = 0; i < php.length; i++) {
-      if (i == 0) {
-        for (let a = 0; a < 1; a++) {
-          let out = ''
-          out += `<div class="col-lg-4 col-md-6 col-sm-6 myapp">`
-          out += `<div class="card border-secondary mb-3">`
-          out += `<div class="card-header bg-success text-white">Dallas 18B20</div>`
-          out += `<div class="card-body">`
-          out += `<h5 class="card-title">${php[COUNT - 1]['date']}</h5>`
-          out += `<h6 class="card-text">Температура: ${live} С°</h6>`
-          out += `</div>`
-          out += `</div>`
-          out += `</div>`
-          document
-            .querySelector('.justify-content-center')
-            .insertAdjacentHTML('afterend', out)
-        }
-      } else {
-        out = ''
-        out += `<div class="col-lg-4 col-md-6 col-sm-6 myapp">`
-        out += `<div class="card border-info mb-3">`
-        out += `<div class="card-header bg-info text-white">Dallas 18B20</div>`
-        out += `<div class="card-body">`
-        out += `<h5 class="card-title">${php[i - 1]['date']}</h5>`
-        out += `<h6 class="card-text">Температура: ${
-          php[i - 1]['value']
-        } С°</h6>`
-        out += `</div>`
-        out += `</div>`
-        out += `</div>`
-        document.querySelector('.myapp').insertAdjacentHTML('afterend', out)
-      }
-    }
+    const logHtml = ({date, value, unix}) => {
+      const block = document.createElement('div')
+      block.classList.add('col-lg-4', 'col-md-6', 'col-sm-6', 'myapp')
+      block.innerHTML = `
+    <div class="card border-secondary mb-3">
+    <div class="card-header bg-secondary text-white">${unix} назад</div>
+    <div class="card-body">
+      <h5 class="card-title">${date}</h5>
+        <h6 class="card-text">Температура: ${value} С°</h6>
+          </div>
+          </div>
+    ` 
+    document.querySelector('.myone').appendChild(block)
+  }
+
+  php.map((el) => logHtml(el))
+
+
+    document.querySelector('.barMenu').insertAdjacentHTML('afterbegin', tempSrednjj)
+
     document
-      .querySelector('.list-group')
-      .insertAdjacentHTML('afterend', maxTempHtml)
+      .querySelector('.barMenu')
+      .insertAdjacentHTML('beforeend', maxTempHtml)
     document
-      .querySelector('.list-group')
-      .insertAdjacentHTML('afterend', minTempHtml)
+      .querySelector('.barMenu')
+      .insertAdjacentHTML('beforeend', minTempHtml)
   }
 }
 
 window.onload = function () {
   const btn = document.querySelector('.mybtn')
-  const form = document.querySelector('.form-control')
+  const form = document.querySelector('.form-select')
 
   btn.addEventListener('click', (e) => {
     e.preventDefault()
     document.querySelectorAll('.myapp').forEach((el) => el.remove())
-    console.log(fullSite(form.value))
+    fullSite(form.value)
   })
 
   fullSite()
