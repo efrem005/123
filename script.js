@@ -81,7 +81,7 @@ console.log("Время выгрузки данных " + Math.abs((t1 - t0) / 1
     function tempLop(){
       const result = Math.abs(php[php.length - 1].value - live).toFixed(1)
       let outTemp = php[php.length - 1].value
-      if(outTemp == live) return `${result}`
+      if(outTemp == live) return `0`
       else if(outTemp < live) return `+${result}`
       else return `-${result}`
     }
@@ -91,7 +91,8 @@ console.log("Время выгрузки данных " + Math.abs((t1 - t0) / 1
                 <div class="card-header bg-success text-white d-flex justify-content-between"><span>Улица</span><span>${php[0].unix } назад</span></div>
                 <div class="card-body bg-light">
                   <h1 class="card-title text-center tempLive">
-                    ${live}°
+                  ${live}
+                  <i class="fas fa-temperature-high" style="font-size: 1.6rem;"></i>
                   </h1>
                 </div>
                 <div class="card-header bg-info text-white text-center">
